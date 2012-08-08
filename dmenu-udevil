@@ -9,51 +9,48 @@ fi
 DEV_LABEL="/dev/disk/by-label/"
 
 opt_mount_type=0
+opt_ignore_filter=0
+udevil_cmd="mount"
 
 usage() {
 	cat <<-EOF
-		usage: dmenu-udevil [-h] [-d] [-mu]
+		usage: dmenu-udevil [-mudih]
 		 -m Mount devices
 		 -u Unmount devices
 		 -d Select by device rather than by label
-		    (Need to be placed before -m or -u)
+		 -i Ignore filter and list all devices in /dev (with -d)
 		 -h Print help
 	EOF
 
 }
 
-dmenu_mount() {
+dmenu_mnt() {
 	if [[ $opt_mount_type -eq 1 ]]; then
-		res=$(find /dev/sd* | cut -d'/' -f3 | ${DMENU} -p "by-device: ")
+		if [[ $opt_ignore_filter -eq 0 ]]; then
+			res=$(find /dev -maxdepth 1 -not -type d -name "s[dr]*" \
+				-or -name "hd*" | cut -d'/' -f3 | ${DMENU} -p "by-device: ")
+		else
+			res=$(find /dev -maxdepth 1 -not -type d | cut -d'/' -f3 | ${DMENU} -p "by-device: ")
+		fi
+
 		[[ -z $res ]] && echo "Cancelled." && exit
-		udevil mount /dev/$res
+		udevil $udevil_cmd /dev/$res
 	else
 		res=$(find $DEV_LABEL* | cut -d'/' -f5 | ${DMENU} -p "by-label: ")
 		[[ -z $res ]] && echo "Cancelled." && exit
-		udevil mount $DEV_LABEL/$res
+		udevil $udevil_cmd $DEV_LABEL/$res
 	fi
 }
 
-dmenu_umount() {
-	if [[ $opt_mount_type -eq 1 ]]; then
-		res=$(find /dev/sd* | cut -d'/' -f3 | ${DMENU} -p "by-device: ")
-		[[ -z $res ]] && echo "Cancelled." && exit
-		udevil umount /dev/$res
-	else
-		res=$(find /media/ -maxdepth 1 -mindepth 1 | cut -d'/' -f3 | ${DMENU} -p "by-label: ")
-		[[ -z $res ]] && echo "Cancelled." && exit
-		udevil umount /media/$res
-	fi
-}
-
-while getopts ':mudh' opt; do
+while getopts ':mudhi' opt; do
 	case "$opt" in
-		m) dmenu_mount && exit;;
-		u) dmenu_umount && exit;;
+		m) ;;
+		u) udevil_cmd="umount";;
 		d) opt_mount_type=1;;
+		i) opt_ignore_filter=1;;
 		h) usage && exit;;
 		/?) echo "Unrecognized command: $OPTARG";;
 	esac
 done
 
-[[ $# -eq 0 ]] && dmenu_mount
+dmenu_mnt && exit
