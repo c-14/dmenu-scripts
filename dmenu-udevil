@@ -1,0 +1,56 @@
+#!/bin/bash
+
+if [[ -f $HOME/.dmenurc ]]; then
+	. $HOME/.dmenurc
+else
+	DMENU='dmenu -i'
+fi
+
+DEV_LABEL="/dev/disk/by-label/"
+
+opt_mount_type=0
+
+usage() {
+	cat <<-EOF
+		usage: dmenu-udevil [-mdu]
+		 -m Mount devices
+		 -u Unmount devices
+		 -d Select by device rather than by label
+	EOF
+
+}
+
+dmenu_mount() {
+	if [[ $opt_mount_type -eq 1 ]]; then
+		res=$(find /dev/sd* | cut -d'/' -f3 | ${DMENU} -p "by-device: ")
+		[[ -z $res ]] && echo "Cancelled." && exit
+		udevil mount /dev/$res
+	else
+		res=$(find $DEV_LABEL* | cut -d'/' -f5 | ${DMENU} -p "by-label: ")
+		[[ -z $res ]] && echo "Cancelled." && exit
+		udevil mount $DEV_LABEL/$res
+	fi
+}
+
+dmenu_umount() {
+	if [[ $opt_mount_type -eq 1 ]]; then
+		res=$(find /dev/sd* | cut -d'/' -f3 | ${DMENU} -p "by-device: ")
+		[[ -z $res ]] && echo "Cancelled." && exit
+		udevil umount /dev/$res
+	else
+		res=$(find /media/ -maxdepth 1 -mindepth 1 | cut -d'/' -f3 | ${DMENU} -p "by-label: ")
+		[[ -z $res ]] && echo "Cancelled." && exit
+		udevil umount /media/$res
+	fi
+}
+
+while getopts ':mud' opt; do
+	case "$opt" in
+		m) dmenu_mount && exit;;
+		u) dmenu_umount && exit;;
+		d) opt_mount_type=1;;
+		/?) echo "Unrecognized command: $OPTARG";;
+	esac
+done
+
+[[ $# -eq 0 ]] && usage && exit 0
