@@ -12,11 +12,12 @@ opt_mount_type=0
 
 usage() {
 	cat <<-EOF
-		usage: dmenu-udevil [-d] [-mu]
+		usage: dmenu-udevil [-h] [-d] [-mu]
 		 -m Mount devices
 		 -u Unmount devices
 		 -d Select by device rather than by label
 		    (Need to be placed before -m or -u)
+		 -h Print help
 	EOF
 
 }
@@ -45,13 +46,14 @@ dmenu_umount() {
 	fi
 }
 
-while getopts ':mud' opt; do
+while getopts ':mudh' opt; do
 	case "$opt" in
 		m) dmenu_mount && exit;;
 		u) dmenu_umount && exit;;
 		d) opt_mount_type=1;;
+		h) usage && exit;;
 		/?) echo "Unrecognized command: $OPTARG";;
 	esac
 done
 
-[[ $# -eq 0 ]] && usage && exit 0
+[[ $# -eq 0 ]] && dmenu_mount
