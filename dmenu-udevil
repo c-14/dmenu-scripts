@@ -12,10 +12,11 @@ opt_mount_type=0
 
 usage() {
 	cat <<-EOF
-		usage: dmenu-udevil [-mdu]
+		usage: dmenu-udevil [-d] [-mu]
 		 -m Mount devices
 		 -u Unmount devices
 		 -d Select by device rather than by label
+		    (Need to be placed before -m or -u)
 	EOF
 
 }
