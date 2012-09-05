@@ -45,6 +45,9 @@ order to cut down the length of arguments passed to dmenu and to
 remove nonsensical devices (such as /dev/null).
 Pass the '-i' flag to instead list all devices in /dev.
 
+You can also pass all output from udevil to notify-send by passing the '-n'
+flag.
+
 [7] - License
 These scripts are considered public domain. Do whatever you want with
 them.
