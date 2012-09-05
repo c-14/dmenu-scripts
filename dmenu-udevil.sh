@@ -51,9 +51,10 @@ dmenu_mnt() {
 	fi
 
 	udevil $udevil_cmd "$path" > "$TMP" 2>&1
+	exitc=$?
 
 	if [[ $opt_notify -eq 1 ]]; then
-		case $? in
+		case $exitc in
 			0) urgency="normal";;
 			*) urgency="critical";;
 		esac
