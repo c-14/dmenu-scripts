@@ -26,16 +26,18 @@ usage() {
 
 dmenu_mnt() {
 	if [[ $opt_mount_type -eq 1 ]]; then
+		prompt="$udevil_cmd by-device:"
 		if [[ $opt_ignore_filter -eq 0 ]]; then
-			res="$(find /dev -maxdepth 1 -not -type d -name "s[dr]*" -or -name "hd*" | cut -d'/' -f3 | ${DMENU} -p "by-device: ")"
+			res="$(find /dev -maxdepth 1 -not -type d -name "s[dr]*" -or -name "hd*" | cut -d'/' -f3 | ${DMENU} -p "$prompt")"
 		else
-			res="$(find /dev -maxdepth 1 -not -type d | cut -d'/' -f3 | ${DMENU} -p "by-device: ")"
+			res="$(find /dev -maxdepth 1 -not -type d | cut -d'/' -f3 | ${DMENU} -p "$prompt")"
 		fi
 
 		[[ -z $res ]] && echo "Cancelled." && exit
 		udevil $udevil_cmd /dev/$res
 	else
-		res="$(find $DEV_LABEL* | cut -d'/' -f5 | ${DMENU} -p "by-label: ")"
+		prompt="$udevil_cmd by-label:"
+		res="$(find $DEV_LABEL* | cut -d'/' -f5 | ${DMENU} -p "$prompt")"
 		[[ -z $res ]] && echo "Cancelled." && exit
 		udevil $udevil_cmd $DEV_LABEL/$res
 	fi
