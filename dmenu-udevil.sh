@@ -18,14 +18,14 @@ udevil_cmd="mount"
 
 usage() {
     cat <<-EOF
-        usage: dmenu-udevil [-mudihn]
-         -m Mount devices
-         -u Unmount devices
-         -d Select by device rather than by label
-         -i Ignore filter and list all devices in /dev (with -d)
-         -n Pass udevil output to notify-send
-         -h Print help
-    EOF
+	usage: dmenu-udevil [-mudihn]
+	     -m Mount devices
+	     -u Unmount devices
+	     -d Select by device rather than by label
+	     -i Ignore filter and list all devices in /dev (with -d)
+	     -n Pass udevil output to notify-send
+	     -h Print help
+	EOF
 
 }
 
