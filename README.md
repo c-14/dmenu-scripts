@@ -45,6 +45,18 @@ Pass the '-i' flag to instead list all devices in /dev.
 You can also pass all output from udevil to notify-send by passing the '-n'
 flag.
 
+### dmenu-mpd
+A very small dmenu wrapper around mpc that provides access to the most common
+actions I perform on a daily basis.
+
+The `add` command will launch another dmenu instance in which you can select a
+single song that is then added to the current playlist.
+I do not intend to include commands that add a range of songs, as this should
+really be up to your favourite mpd client.
+
+Note that some of the commands need additional parameters (e.g `volume` and `seek`).
+See the mpc manpage for more documentation about the commands and parameters.
+
 ## License
 These scripts are considered public domain. Do whatever you want with
 them.
