@@ -7,7 +7,7 @@ else
 fi
 
 prompt="mpc:"
-prompt_add="$prompt-add:"
+prompt_add="mpc-add:"
 
 cmd_list="play stop next prev toggle add volume seek repeat single consume random clear crop"
 
