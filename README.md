@@ -57,6 +57,12 @@ really be up to your favourite mpd client.
 Note that some of the commands need additional parameters (e.g `volume` and `seek`).
 See the mpc manpage for more documentation about the commands and parameters.
 
+### dmenu-tmux
+Wraps around another script I wrote in vehk/dotfiles. The script creates (or
+attaches to) a session in tmux. This dmenu wrapper has a list of default
+sessions I use on a daily basis and launches urxvtc and attaches the tmux
+session afterwards.
+
 ## License
 These scripts are considered public domain. Do whatever you want with
 them.
