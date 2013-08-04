@@ -17,7 +17,7 @@ tmux_run="$(tmux list-sessions -F '#S')"
 prompt="tmux:"
 
 spawn() {
-    urxvtc -e bash -c "$attach $1"
+    urxvtc -name "$1" -e bash -c "$attach $1"
 }
 
 target=$(echo $tmux_pre $tmux_run | sed 's/ /\n/g' | sort -u | ${DMENU} -p "$prompt")
