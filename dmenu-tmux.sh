@@ -10,6 +10,12 @@ if [[ -f $HOME/.tmux/attach.list ]]; then
     . $HOME/.tmux/attach.list
 fi
 
+ssh_chain() {
+    if [[ -f $HOME/.keychain/$HOSTNAME-sh ]]; then
+        . $HOME/.keychain/$HOSTNAME-sh
+    fi
+}
+
 if [[ $1 == "-r" ]]; then
 
     attach="$HOME/.tmux/tmux-attach-remote"
@@ -17,6 +23,12 @@ if [[ $1 == "-r" ]]; then
 
     while true; do
         ssh_target=$(echo $ssh_pre | sed 's/ /\n/g' | ${DMENU} -p "$ssh_prompt")
+
+        # this works for keychain, ssh-agent and gpg-agent are untested.
+        # Should be fine if you use x11-ssh-askpass or pinentry with gtk
+        # This is needed in case dmenu-tmux is started without a
+        # controlling terminal.
+        ssh_chain
 
         [[ -z $ssh_target ]] && exit
         tmux_run="$(ssh $ssh_target "tmux list-sessions -F \#S")"
