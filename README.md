@@ -58,10 +58,23 @@ Note that some of the commands need additional parameters (e.g `volume` and `see
 See the mpc manpage for more documentation about the commands and parameters.
 
 ### dmenu-tmux
-Wraps around another script I wrote in vehk/dotfiles. The script creates (or
-attaches to) a session in tmux. This dmenu wrapper has a list of default
-sessions I use on a daily basis and launches urxvtc and attaches the tmux
-session afterwards.
+Wraps around tmux-attach scripts in vehk/dotfiles.
+
+dmenu-tmux sources `~/.tmux/attach.list` for session that should be
+displayed by default. For example:
+
+```bash
+tmux_pre="mail misc mpd irc" # default tmux sessions
+ssh_pre="host1 host2 host3" # default ssh hosts
+```
+
+#### attach
+When invoked with no arguments, dmenu-tmux will attach to a local tmux
+session using tmux-attach.
+
+#### attach-remote
+When invoked with `-r`, dmenu-tmux will attach to a remote tmux session
+using tmux-attach-remote.
 
 ## License
 These scripts are considered public domain. Do whatever you want with
