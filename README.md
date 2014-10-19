@@ -65,16 +65,11 @@ displayed by default. For example:
 
 ```bash
 tmux_pre="mail misc mpd irc" # default tmux sessions
-ssh_pre="host1 host2 host3" # default ssh hosts
 ```
 
 #### attach
 When invoked with no arguments, dmenu-tmux will attach to a local tmux
 session using tmux-attach.
-
-#### attach-remote
-When invoked with `-r`, dmenu-tmux will attach to a remote tmux session
-using tmux-attach-remote.
 
 ## License
 These scripts are considered public domain. Do whatever you want with
