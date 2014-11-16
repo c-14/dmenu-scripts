@@ -7,7 +7,7 @@ want to use in conjunction with dmenu.
 
 ## Requirements
 The requirements are script-specific. Usually, the name of the script
-implies its requirement programs (e.g dmenu-udevil needs udevil).
+implies its required programs (e.g dmenu-udevil needs udevil).
 
 Any special requirements are listed in the corresponding script
 section.
@@ -27,7 +27,10 @@ In order to centralize your dmenu configuration, my scripts source
 `.dmenurc` in $HOME.
 The configuration file contains the DMENU variable that specifies
 which parameters dmenu is run with. Here is an example:
-`DMENU="dmenu -i -fn -*-terminus-medium-r-*-*-16-*-*-*-*-*-*-* -nb #3F3F3F -nf #DCDCCC -sb #1E2320 -sf #F0DFAF"`
+
+```bash
+DMENU="dmenu -i -fn -*-terminus-medium-r-*-*-16-*-*-*-*-*-*-* -nb #3F3F3F -nf #DCDCCC -sb #1E2320 -sf #F0DFAF"
+```
 
 ## Scripts
 
@@ -66,10 +69,20 @@ displayed by default. For example:
 ```bash
 tmux_pre="mail misc mpd irc" # default tmux sessions
 ```
-
-#### attach
 When invoked with no arguments, dmenu-tmux will attach to a local tmux
 session using tmux-attach.
+
+### dmenu-pwsafe
+A wrapper around the cli password manager `pwsafe`. After selecting
+an entry with dmenu, the script opens up a terminal window and runs
+`pwsafe` with the options passed to dmenu-pwsafe.
+
+As `pwsafe` does not provide an unencrypted list of its password
+entries, dmenu-pwsafe requires a pre-compiled list that can be generated
+with `pwsafe --list > ~/.pwlist`.
+
+The `TERMCMD` variable specifies which terminal emulator to start; when
+empty, dmenu-pwsafe defaults to `xterm`.
 
 ## License
 These scripts are considered public domain. Do whatever you want with
