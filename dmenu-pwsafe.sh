@@ -16,4 +16,4 @@ item=$(${DMENU} -p "$PROMPT" < "$PWLIST")
 
 [[ -z $item ]] && exit 1
 
-${TERMCMD} -name pass -e pwsafe $@ $item --
+${TERMCMD} -name pass -e pwsafe $@ "$item" --
