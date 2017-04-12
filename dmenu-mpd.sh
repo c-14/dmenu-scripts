@@ -1,10 +1,6 @@
 #!/bin/bash
 
-if [[ -f $HOME/.dmenurc ]]; then
-    . $HOME/.dmenurc
-else
-    DMENU='dmenu -i'
-fi
+DMENU=${DMENU:-dmenu}
 
 prompt="mpc:"
 prompt_add="mpc-add:"
@@ -15,6 +11,7 @@ mpc_add() {
     file="$(mpc listall | ${DMENU} -l 15 -p "$prompt_add")"
     [[ -z $file ]] && exit 1
     mpc add "$file"
+    mpc play
 }
 
 cmd="$(echo $cmd_list | sed 's/ /\n/g' | ${DMENU} -p "$prompt")"

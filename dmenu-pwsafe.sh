@@ -1,10 +1,6 @@
 #!/bin/bash
 
-if [[ -f $HOME/.dmenurc ]]; then
-    . $HOME/.dmenurc
-else
-    DMENU='dmenu -i'
-fi
+DMENU=${DMENU:-dmenu}
 
 TERMCMD=${TERMCMD:-xterm}
 

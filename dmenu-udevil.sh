@@ -1,10 +1,6 @@
 #!/bin/bash
 
-if [[ -f $HOME/.dmenurc ]]; then
-    . $HOME/.dmenurc
-else
-    DMENU='dmenu -i'
-fi
+DMENU=${DMENU:-dmenu}
 
 DEV_LABEL="/dev/disk/by-label/"
 TMP="/tmp/dmnt-udevil-$(date +%s)"
