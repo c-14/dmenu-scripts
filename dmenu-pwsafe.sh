@@ -8,7 +8,7 @@ PWLIST="$HOME/.pwlist"
 
 PROMPT="pwsafe $@"
 
-item=$(${DMENU} -p "$PROMPT" < "$PWLIST")
+item=$(eval ${DMENU} -p \""$PROMPT\"" < "$PWLIST")
 
 [[ -z $item ]] && exit 1
 
